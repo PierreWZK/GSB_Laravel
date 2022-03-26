@@ -18,12 +18,24 @@ class VisiteurController extends Controller
 
     public function search()
     {
-        $q = request()->input('q');
-        // dd($q);
+        $res = request()->input('resa');
+        $nom = request()->input('nom');
+        // dd($nom);
+        $prenom = request()->input('prenom');
+        // dd($prenom);
 
-        $searchVisiteur = Visiteur::where('VIS_NOM', 'like', "$q%")
-        ->get();
-
+        if ($nom != NULL) {
+            $searchVisiteur = Visiteur::where('VIS_NOM', 'like', "$nom%")
+            ->get();
+        } elseif ($prenom != NULL) {
+            $searchVisiteur = Visiteur::where('VIS_PRENOM', 'like', "$prenom%")
+            ->get();
+        } else {
+            $res = "";
+            $searchVisiteur = Visiteur::where('VIS_NOM', 'like', "$res%")
+            ->get();
+        }
+        
         return view('visiteur')->with('visiteurs', $searchVisiteur);
     }
 }

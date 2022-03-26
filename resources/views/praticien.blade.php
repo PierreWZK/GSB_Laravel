@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Rechercher un praticien dans la liste de France') }}
+            {{ __('Rechercher un praticien') }}
         </h2>
     </x-slot>
 
@@ -9,52 +9,47 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <div class ="container">
-                        <form method="get" action="{{ route('recherchePraticien') }}" style="text-align: center;">
+                    <div class="container text-black">
+                        <form method="get" action="{{ route('recherchePraticien') }}" class="text-center text-black mb-8">
                             @csrf
-                            <select name="recherchePraticiens" onChange="form.submit()">
+                            <select class="select select-bordered w-full max-w-xs" name="recherchePraticiens" onChange="form.submit()">
+                                <option selected="selected" disabled>Choisissez un practicien</option>
                                 @foreach ($praticiens as $info)
-                                    <option value="{{ $info->PRA_NUM }}">{{ $info->PRA_NOM." ".$info->PRA_PRENOM }} </option>
+                                <option value="{{ $info->PRA_NUM }}">{{ $info->PRA_NOM." ".$info->PRA_PRENOM }} </option>
                                 @endforeach
                             </select>
                         </form>
-                        <br>
-                        <br>
-                        <div class="mb-3" style="margin-left: 25%;">  
-                            <label for="exampleInputEmail1" class="form-label"><strong>Nom du praticien :</strong></label>
+                        <div class="text-center">
+                        <!-- <div class="text-right" style="margin-right: 30%">  -->
+                            <div class="mb-8">
+                                <label class="form-label">Nom du Practicien :</label>
+                                <input type="text" class="input input-bordered w-full max-w-xs" value="{{ $praticien->PRA_NOM }}" disabled>
+                            </div>
+                            <div class="mb-8">
+                                <label class="form-label">Prénom du Practicien :</label>
+                                <input type="text" class="input input-bordered w-full max-w-xs" value="{{ $praticien->PRA_PRENOM }}" disabled>
+                            </div>
+                            <div class="mb-8">
+                                <label class="form-label">Adresse du Practicien :</label>
+                                <input type="text" class="input input-bordered w-full max-w-xs" value="{{ $praticien->PRA_ADRESSE }}" disabled>
+                            </div>
+                            <div class="mb-8">
+                                <label class="form-label">Ville du Practicien :</label>
+                                <input type="text" class="input input-bordered w-full max-w-xs" value="{{ $praticien->PRA_VILLE }}" disabled>
+                            </div>
+                            <div class="mb-8">
+                                <label class="form-label">Code Postal du Practicien :</label>
+                                <input type="text" class="input input-bordered w-full max-w-xs" value="{{ $praticien->PRA_CP }}" disabled>
+                            </div>
+                            <div class="mb-8">
+                                <label class="form-label">Coéfficient de notoriété :</label>
+                                <input type="text" class="input input-bordered w-full max-w-xs" value="{{ $praticien->PRA_COEFNOTORIETE }}" disabled>
+                            </div>
+                            <div class="mb-8">
+                                <label class="form-label">Lieu d'exercice :</label>
+                                <input type="text" class="input input-bordered w-full max-w-xs" value="{{ $praticien->TYP_CODE }}" disabled>
+                            </div>
                         </div>
-                        <p style="background-color: rgb(0, 119, 255); margin-left: 25%; margin-right: 25%;">→ {{ $praticien->PRA_NOM }}</p>
-
-                        <div class="mb-3" style="margin-left: 25%;">
-                            <label for="exampleInputEmail1" class="form-label"><strong>Prénom du praticien :</strong></label>
-                        </div>
-                        <p style="background-color: rgb(0, 119, 255); margin-left: 25%; margin-right: 25%;">→ {{ $praticien->PRA_PRENOM }}</p>
-
-                        <div class="mb-3" style="margin-left: 25%;">
-                            <label for="exampleInputEmail1" class="form-label"><strong>Adresse :</strong></label>
-                        </div>
-                        <p style="background-color: rgb(0, 119, 255); margin-left: 25%; margin-right: 25%;">→ {{ $praticien->PRA_ADRESSE }}</p>
-
-                        <div class="mb-3" style="margin-left: 25%;">
-                            <label for="exampleInputEmail1" class="form-label"><strong>Ville :</strong></label>
-                        </div>
-                        <p style="background-color: rgb(0, 119, 255); margin-left: 25%; margin-right: 25%;">→ {{ $praticien->PRA_VILLE }}</p>
-
-                        <div class="mb-3" style="margin-left: 25%;">
-                            <label for="exampleInputEmail1" class="form-label"><strong>Code postal :</strong></label>
-                        </div>
-                        <p style="background-color: rgb(0, 119, 255); margin-left: 25%; margin-right: 25%;">→ {{ $praticien->PRA_CP }}</p>
-
-                        <div class="mb-3" style="margin-left: 25%;">
-                            <label for="exampleInputEmail1" class="form-label"><strong>Coefficient de notoriété :</strong></label>
-                        </div>
-                        <p style="background-color: rgb(0, 119, 255); margin-left: 25%; margin-right: 25%;">→ {{ $praticien->PRA_COEFNOTORIETE }}</p>
-
-                        <br>
-                        <div class="mb-3" style="margin-left: 25%;">
-                            <label for="exampleInputEmail1" class="form-label"><strong>Lieu d'exercice :</strong></label>
-                        </div>
-                        <p style="background-color: rgb(0, 119, 255); margin-left: 25%; margin-right: 25%;">→ {{ $praticien->TYP_CODE }}</p>
                     </div>
                 </div>
             </div>

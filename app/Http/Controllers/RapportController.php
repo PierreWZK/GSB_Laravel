@@ -34,13 +34,9 @@ class RapportController extends Controller
     // NouveauRapport
     public function store(Request $request)
     {
-        $request->validate([
-            "num"=>["required", ""]
-        ]);
 
         $rapport = new Rapport();
         $rapport->VIS_MATRICULE = auth()->user()->VIS_MATRICULE;
-        $rapport->RAP_NUM = $request->num;
         $rapport->PRA_NUM = $request->praticien;
         $rapport->RAP_DATE = $request->date;
         $rapport->RAP_BILAN = $request->bilan;

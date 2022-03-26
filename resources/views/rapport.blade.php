@@ -12,40 +12,38 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-md-8">
-                                <div class ="container">
-                                    <a href="/nouveauRapport" style="font-size: 24px; background-color: lightgrey; border-radius: 3px; padding-left: 5px; padding-right: 5px; margin-left: 10%;">Nouveau rapport</a>
-                                    <br>
-                                    <br>
-                                    <table>
-                                        <thead style="text-align: center; border: solid rgb(0, 119, 255);">
+                                <div class ="container overflow-x-auto text-black border-slate-600">
+                                <button class="btn btn-xs sm:btn-sm md:btn-md lg:btn-md mb-4" onclick="window.location.href = '/nouveauRapport';">Nouveau Rapport</button>
+                                    <table class="table table-zebra w-full text-center border-slate-600">
+                                        <thead>
                                             <tr>
-                                                <td><strong>Visiteur</strong></td>
-                                                <td><strong>Numéro</strong></td>
-                                                <td><strong>Praticien</strong></td>
-                                                <td><strong>Date</strong></td>
-                                                <td><strong>Bilan</strong></td>
-                                                <td><strong>Motif</strong></td>
+                                                <td>Visiteur</strong></td>
+                                                <td>Numéro</td>
+                                                <td>Praticien</td>
+                                                <td>Date</td>
+                                                <td>Bilan</td>
+                                                <td>Motif</td>
                                             </tr>
                                         </thead>
                                         <tbody >
                                                 @foreach($rapports as $info)
-                                                <tr style="border: solid rgb(0, 119, 255);">
-                                                    <td style="border: solid rgb(0, 119, 255); text-align: center;">
+                                                <tr>
+                                                    <td>
                                                         <p>{{ $info->VIS_MATRICULE }}</p>
                                                     </td>
-                                                    <td style="border: solid rgb(0, 119, 255); text-align: center;">
+                                                    <td>
                                                         <p>{{ $info->RAP_NUM }}</p>
                                                     </td>
-                                                    <td style="border: solid rgb(0, 119, 255); text-align: center;">
+                                                    <td>
                                                         <p>{{ $info->PRA_NUM }}</p>
                                                     </td>
-                                                    <td style="border: solid rgb(0, 119, 255); text-align: center;">
+                                                    <td>
                                                         <p>{{ $info->RAP_DATE }}</p>
                                                     </td>
-                                                    <td style="border: solid rgb(0, 119, 255)">
+                                                    <td>
                                                         <p>{{ $info->RAP_BILAN }}</p>
                                                     </td>
-                                                    <td style="border: solid rgb(0, 119, 255)">
+                                                    <td>
                                                         <p>{{ $info->RAP_MOTIF }}</p>
                                                     </td>
                                                 </tr>
