@@ -19,18 +19,14 @@
             <div>
                 <x-label for="nom" :value="__('Nom')" />
 
-                <x-input id="nom" class="block mt-1 w-full" type="text" placeholder="swiss" name="nom" :value="old('nom')" required autofocus />
+                <x-input id="nom" class="block mt-1 w-full px-2" type="text" placeholder="swiss" name="nom" :value="old('nom')" required autofocus />
             </div>
 
             <!-- Password -->
             <div class="mt-4">
                 <x-label for="date" :value="__('Date')" />
 
-                <x-input id="date" class="block mt-1 w-full"
-                                type="text"
-                                placeholder="18-jun-2003"
-                                name="date"
-                                required />
+                <x-input id="date" class="block mt-1 w-full px-2" type="text" placeholder="18-jun-2003" name="date" required />
             </div>
 
             <!-- Remember Me -->

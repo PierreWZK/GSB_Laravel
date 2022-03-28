@@ -37,6 +37,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/visiteur',[App\Http\Controllers\VisiteurController::class,'liste'])->name('visiteur');
     Route::get('/searchVisiteur',[App\Http\Controllers\VisiteurController::class,'search'])->name('research');
 
+    Route::get('/medicaments',[App\Http\Controllers\MedicamentsController::class,'liste'])->name('medicaments');
+    // Route::get('/searchVisiteur',[App\Http\Controllers\MedicamentsController::class,'search'])->name('research');
+
     Route::post('/profil',[App\Http\Controllers\ProfilController::class,'storeProfil'])->name('profil');
     Route::get('/profil',[App\Http\Controllers\ProfilController::class,'liste'])->name('profilVisiteur');
 });

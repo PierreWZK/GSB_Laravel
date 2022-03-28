@@ -4,6 +4,7 @@
             {{ __('Créer un nouveau Rapport') }}
         </h2>
     </x-slot>
+
     <div class="py-9">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -15,7 +16,7 @@
                                     @csrf
                                     <div class="container text-center text-black">
                                         <div class="mb-8">
-                                        <label for="exampleInputEmail1" class="form-label">Nom du Praticien :</label>
+                                            <label for="exampleInputEmail1" class="form-label">Nom du Praticien :</label>
                                             <select class="select select-bordered w-full max-w-xs" name="practicien" required>
                                                 <option selected="selected" disabled>Choisissez un practicien</option>
                                                 @foreach ($praticiens as $info)
