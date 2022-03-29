@@ -29,16 +29,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/rapport',[App\Http\Controllers\RapportController::class,'liste'])->name('rapport');
     
     Route::post('/nouveauRapport',[App\Http\Controllers\RapportController::class,'store'])->name('nouveauRapport');
-    Route::get('/nouveauRapport',[App\Http\Controllers\RapportController::class,'rapportPraticien'])->name('rapportPraticien');
+    Route::get('/nouveauRapport',[App\Http\Controllers\RapportController::class,'rapportVisiteur'])->name('rapportVisiteur');
     
     Route::get('/praticien',[App\Http\Controllers\PraticienController::class,'liste'])->name('praticien');
     Route::get('/praticienById',[App\Http\Controllers\PraticienController::class,'getIdPraticien'])->name('recherchePraticien');
     
     Route::get('/visiteur',[App\Http\Controllers\VisiteurController::class,'liste'])->name('visiteur');
-    Route::get('/searchVisiteur',[App\Http\Controllers\VisiteurController::class,'search'])->name('research');
+    Route::get('/searchVisiteur',[App\Http\Controllers\VisiteurController::class,'searchVisiteur'])->name('researchVisiteur');
 
     Route::get('/medicaments',[App\Http\Controllers\MedicamentsController::class,'liste'])->name('medicaments');
-    // Route::get('/searchVisiteur',[App\Http\Controllers\MedicamentsController::class,'search'])->name('research');
+    Route::get('/searchPraticien',[App\Http\Controllers\MedicamentsController::class,'searchPraticien'])->name('researchPraticien');
 
     Route::post('/profil',[App\Http\Controllers\ProfilController::class,'storeProfil'])->name('profil');
     Route::get('/profil',[App\Http\Controllers\ProfilController::class,'liste'])->name('profilVisiteur');

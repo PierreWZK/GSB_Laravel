@@ -38,7 +38,7 @@
                                                         <p>{{ $info->PRA_NUM }}</p>
                                                     </td>
                                                     <td>
-                                                        <p>{{ $info->RAP_DATE }}</p>
+                                                        <p>{{ date("d/m/Y H:i", strToTime($info->RAP_DATE)) }}</p>
                                                     </td>
                                                     <td>
                                                         <p>{{ $info->RAP_BILAN }}</p>

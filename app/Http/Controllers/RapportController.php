@@ -24,7 +24,7 @@ class RapportController extends Controller
     }
 
     // PraticienRapport
-    public function rapportPraticien()
+    public function rapportVisiteur()
     {
         $praticiens = Praticien::all();
         
@@ -34,7 +34,7 @@ class RapportController extends Controller
     // NouveauRapport
     public function store(Request $request)
     {
-
+        // dd($request);
         $rapport = new Rapport();
         $rapport->VIS_MATRICULE = auth()->user()->VIS_MATRICULE;
         $rapport->PRA_NUM = $request->praticien;
@@ -43,5 +43,32 @@ class RapportController extends Controller
         $rapport->RAP_MOTIF = $request->motif;
         $rapport->save();
         return redirect('/rapport');
+    }
+    public function search()
+    {
+        $res = request()->input('resa');
+        $nom = request()->input('nom');
+        // dd($nom);
+        $prenom = request()->input('prenom');
+        // dd($prenom);
+        $ville = request()->input('ville');
+        // dd($ville);
+
+        if ($nom != NULL) {
+            $searchPra = Praticien::where('VIS_NOM', 'like', "$nom%")
+            ->get();
+        } elseif ($prenom != NULL) {
+            $searchPra = Praticien::where('Vis_NOM', 'like', "$prenom%")
+            ->get();
+        } elseif ($ville != NULL) {
+            $searchPra = Praticien::where('VIS_ADRESSE', 'like', "$ville%")
+            ->get();
+        } else {
+            $res = "";
+            $searchPra = Praticien::where('VIS_NOM', 'like', "$res%")
+            ->get();
+        }
+        
+        return view('praticien')->with('praticiens', $searchPra);
     }
 }

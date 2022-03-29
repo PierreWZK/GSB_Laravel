@@ -59,7 +59,6 @@
                                                 <td>Prénom</td>
                                                 <td>Adresse</td>
                                                 <td>Ville</td>
-                                                <td>Code postale</td>
                                                 <td>Code Labo</td>
                                             </tr>
                                         </thead>
@@ -79,10 +78,7 @@
                                                     <p>{{ $info->VIS_ADRESSE }}</p>
                                                 </td>
                                                 <td>
-                                                    <p>{{ $info->VIS_VILLE }}</p>
-                                                </td>
-                                                <td>
-                                                    <p>{{ $info->VIS_CP }}</p>
+                                                    <p>{{ $info->VIS_VILLE }}, {{ $info->VIS_CP }}</p>
                                                 </td>
                                                 <td>
                                                     <p>{{ $info->LAB_CODE }}</p>

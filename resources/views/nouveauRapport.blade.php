@@ -17,8 +17,8 @@
                                     <div class="container text-center text-black">
                                         <div class="mb-8">
                                             <label for="exampleInputEmail1" class="form-label">Nom du Praticien :</label>
-                                            <select class="select select-bordered w-full max-w-xs" name="practicien" required>
-                                                <option selected="selected" disabled>Choisissez un practicien</option>
+                                            <select class="select select-bordered w-full max-w-xs" name="praticien" required>
+                                                <option selected="selected" disabled>Choisissez un praticien</option>
                                                 @foreach ($praticiens as $info)
                                                 <option value="{{ $info->PRA_NUM }}">{{ $info->PRA_NOM." ".$info->PRA_PRENOM }}</option>
                                                 @endforeach
