@@ -24,7 +24,7 @@
 
             <!-- Password -->
             <div class="mt-4">
-                <x-label for="date" :value="__('Date')" />
+                <x-label for="date" :value="__('Date d\'embauche')" />
 
                 <x-input id="date" class="block mt-1 w-full px-2" type="text" placeholder="18-jun-2003" name="date" required />
             </div>

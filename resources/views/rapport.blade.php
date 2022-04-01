@@ -16,13 +16,15 @@
                                 <button class="btn btn-xs sm:btn-sm md:btn-md lg:btn-md mb-4" onclick="window.location.href = '/nouveauRapport';">Nouveau Rapport</button>
                                     <table class="table table-zebra w-full text-center border-slate-600">
                                         <thead>
-                                            <tr>
-                                                <td>Visiteur</strong></td>
-                                                <td>Numéro</td>
-                                                <td>Praticien</td>
-                                                <td>Date</td>
-                                                <td>Bilan</td>
-                                                <td>Motif</td>
+                                            <tr class="text-white">
+                                                <td class="bg-blue-800">Visiteur</strong></td>
+                                                <td class="bg-blue-800">Numéro</td>
+                                                <td class="bg-blue-800">Praticien</td>
+                                                <td class="bg-blue-800">Date</td>
+                                                <td class="bg-blue-800">Bilan</td>
+                                                <td class="bg-blue-800">Motif</td>
+                                                <td class="bg-blue-800">Medicament</td>
+                                                <td class="bg-blue-800">Qte</td>
                                             </tr>
                                         </thead>
                                         <tbody >
@@ -45,6 +47,24 @@
                                                     </td>
                                                     <td>
                                                         <p>{{ $info->RAP_MOTIF }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <ul>
+                                                    @foreach($medocsQte as $infoMed)
+                                                        @if ($infoMed->RAP_NUM == $info->RAP_NUM)
+                                                            <li>{{ $infoMed->MED_NOMCOMMERCIAL }}</li>
+                                                        @endif
+                                                    @endforeach
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        <ul>
+                                                    @foreach($medocsQte as $infoMed)
+                                                        @if ($infoMed->RAP_NUM == $info->RAP_NUM)
+                                                            <li>{{ $infoMed->OFF_QTE }}</li>
+                                                        @endif
+                                                    @endforeach
+                                                        </ul>
                                                     </td>
                                                 </tr>
                                                 @endforeach

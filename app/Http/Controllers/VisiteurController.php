@@ -16,36 +16,22 @@ class VisiteurController extends Controller
         return view("visiteur", ["visiteur" => $visiteur,"visiteurs" => $visiteurs]);
     }
 
-    public function search()
+    public function searchVisiteur(Request $request)
     {
         $res = request()->input('resa');
-        $nom = request()->input('nom');
-        // dd($nom);
-        $prenom = request()->input('prenom');
-        // dd($prenom);
-        $matricule = request()->input('matricule');
-        // dd($matricule);
-        $ville = request()->input('ville');
-        // dd($ville);
-        $cp = request()->input('cp');
-        // dd($cp);
-        $codelabo = request()->input('codelabo');
-        // dd($cadolabo);
+        $q = request()->input('q');
+        $ville = $request->ville;
+        // dd($request);
 
-        if ($matricule != NULL) {
-            $searchVisiteur = Visiteur::where('VIS_MATRICULE', 'like', "$matricule%")
+        if ($q != NULL && $ville != NULL) {
+            $searchVisiteur = Visiteur::where('VIS_NOM', 'like', "$q%")
+            ->Where('VIS_VILLE', 'like', "$ville%")
             ->get();
-        } elseif ($nom != NULL) {
-            $searchVisiteur = Visiteur::where('VIS_NOM', 'like', "$nom%")
-            ->get();
-        } elseif ($prenom != NULL) {
-            $searchVisiteur = Visiteur::where('Vis_NOM', 'like', "$prenom%")
+        } elseif ($q != NULL) {
+            $searchVisiteur = Visiteur::where('VIS_NOM', 'like', "$q%")
             ->get();
         } elseif ($ville != NULL) {
-            $searchVisiteur = Visiteur::where('VIS_ADRESSE', 'like', "$ville%")
-            ->get();
-        } elseif ($codelabo != NULL) {
-            $searchVisiteur = Visiteur::where('LAB_CODE', 'like', "$codelabo%")
+            $searchVisiteur = Visiteur::where('VIS_VILLE', 'like', "$ville%")
             ->get();
         } else {
             $res = "";

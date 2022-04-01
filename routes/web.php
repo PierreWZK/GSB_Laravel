@@ -26,19 +26,21 @@ require __DIR__.'/auth.php';
 #Aissam snap : lz-aissam (que les meufs)
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
     Route::get('/rapport',[App\Http\Controllers\RapportController::class,'liste'])->name('rapport');
     
     Route::post('/nouveauRapport',[App\Http\Controllers\RapportController::class,'store'])->name('nouveauRapport');
     Route::get('/nouveauRapport',[App\Http\Controllers\RapportController::class,'rapportVisiteur'])->name('rapportVisiteur');
     
     Route::get('/praticien',[App\Http\Controllers\PraticienController::class,'liste'])->name('praticien');
-    Route::get('/praticienById',[App\Http\Controllers\PraticienController::class,'getIdPraticien'])->name('recherchePraticien');
+    Route::get('/searchPraticien',[App\Http\Controllers\PraticienController::class,'search'])->name('researchPra');
     
     Route::get('/visiteur',[App\Http\Controllers\VisiteurController::class,'liste'])->name('visiteur');
-    Route::get('/searchVisiteur',[App\Http\Controllers\VisiteurController::class,'searchVisiteur'])->name('researchVisiteur');
+    Route::get('/searchVisiteur',[App\Http\Controllers\VisiteurController::class,'searchVisiteur'])->name('research');
 
     Route::get('/medicaments',[App\Http\Controllers\MedicamentsController::class,'liste'])->name('medicaments');
-    Route::get('/searchPraticien',[App\Http\Controllers\MedicamentsController::class,'searchPraticien'])->name('researchPraticien');
+    Route::get('/searchMedicaments',[App\Http\Controllers\MedicamentsController::class,'searchMedicaments'])->name('researchMed');
 
     Route::post('/profil',[App\Http\Controllers\ProfilController::class,'storeProfil'])->name('profil');
     Route::get('/profil',[App\Http\Controllers\ProfilController::class,'liste'])->name('profilVisiteur');

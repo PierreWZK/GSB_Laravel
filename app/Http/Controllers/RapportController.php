@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Rapport;
+use App\Models\Offrir;
+use App\Models\Medicament;
 use App\Models\Praticien;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,20 +22,36 @@ class RapportController extends Controller
             ->where('rapport_visite.VIS_MATRICULE', $id)
             ->get();
         
-        return view("rapport", ["rapports" => $rapports]);
-    }
+        // Afficher offrir dans le rapport 
+        $medocsQte = Offrir::join('medicament', 'offrir.MED_DEPOTLEGAL', '=', 'medicament.MED_DEPOTLEGAL')
+            ->where('offrir.VIS_MATRICULE', $id)
+            ->get();
+        
+            return view("rapport", ["rapports" => $rapports, "medocsQte" => $medocsQte]);
+        }
 
     // PraticienRapport
     public function rapportVisiteur()
     {
         $praticiens = Praticien::all();
-        
-        return view("nouveauRapport", ["praticiens" => $praticiens]);
+        $medocs = Medicament::all();
+
+        return view("nouveauRapport", ["praticiens" => $praticiens, "medocs" => $medocs]);        
     }
 
     // NouveauRapport
     public function store(Request $request)
     {
+        //VALIDATE RAPPORT
+        $request->validate([
+            'PRA_NUM' => ['required', 'string'],
+            'RAP_DATE' => ['required', 'date'],
+            'RAP_BILAN' => ['required', 'string'],
+            'RAP_MOTIF' => ['nullable', 'string']
+        ]);
+
+        // Rapport store
+
         // dd($request);
         $rapport = new Rapport();
         $rapport->VIS_MATRICULE = auth()->user()->VIS_MATRICULE;
@@ -42,6 +60,33 @@ class RapportController extends Controller
         $rapport->RAP_BILAN = $request->bilan;
         $rapport->RAP_MOTIF = $request->motif;
         $rapport->save();
+
+        //Recup first RAP_NUM with order by desc
+        $lastRapport = Rapport::orderByDesc("RAP_NUM")->first();
+
+
+        // Médicaments store
+        $medoc = new Offrir();
+        $medoc->VIS_MATRICULE = $rapport->VIS_MATRICULE;
+        $medoc->RAP_NUM = $lastRapport->RAP_NUM;
+        if ($request->qte1 != 0 && $request->qte2 !=0) {
+            $medoc->MED_DEPOTLEGAL = $request->medoc1;
+            $medoc->OFF_QTE = $request->qte1;
+            $medoc->save();
+            $medoc = new Offrir();
+            $medoc->VIS_MATRICULE = $rapport->VIS_MATRICULE;
+            $medoc->RAP_NUM = $lastRapport->RAP_NUM;
+            $medoc->MED_DEPOTLEGAL = $request->medoc2;
+            $medoc->OFF_QTE = $request->qte2;
+        } elseif ($request->qte1 != 0) {
+            $medoc->MED_DEPOTLEGAL = $request->medoc1;
+            $medoc->OFF_QTE = $request->qte1;
+        } elseif ($request->qte2 != 0) {
+            $medoc->MED_DEPOTLEGAL = $request->medoc2;
+            $medoc->OFF_QTE = $request->qte2;
+        }
+        $medoc->save();
+
         return redirect('/rapport');
     }
     public function search()

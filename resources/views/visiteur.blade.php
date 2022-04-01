@@ -12,34 +12,24 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-md-8">
-                                <!-- ===DEBUT MODAL=== -->
+                                <!-- ===SEARCH=== -->
+                                <form action="{{ route('research') }}" class="flex items-center d-flex mr-3 text-black mb-3">
+                                    <div class="form-group mr-1 flex">
+                                        <input type="text" name="q" class="input input-bordered w-full max-w-xs" value="{{ request()->q ?? '' }}" placeholder="Recherche par Nom">
+                                    </div>
+                                    <div class="form-group mb-0 mr-1">
+                                        <select name="ville" class="input input-bordered w-full max-w-xs">
+                                            <option selected="selected" disabled>Filtre par Ville</option>
+                                            @foreach ($visiteurs as $info)
+                                                <option value="{{ $info->VIS_VILLE }}">{{ $info->VIS_VILLE }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-xs sm:btn-sm md:btn-md lg:btn-md mb-1 ml-2">Chercher</button>
+                                </form>
+
+                                <!-- ===REINITIALISATION=== -->
                                 <div class="mb-4 text-black">
-
-                                    <!-- ===RECHERCHER=== -->
-                                    <label for="my-modal-4" class="btn modal-button mb-4">Rechercher</label>
-                                    <input type="checkbox" id="my-modal-4" class="modal-toggle">
-                                    <label for="my-modal-4" class="modal cursor-pointer">
-                                        <label class="modal-box relative" for="">
-                                            <label for="my-modal-4" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                                            <h3 class="text-lg font-bold">Chercher un visiteur</h3>
-                                            <p class="py-4">Vous pouvez chercher une personne en particulier grâce a son Nom, Prénom, Matricule, Ville, Code Postal ou Code Labo</p>
-                                            @include('search')
-                                        </label>
-                                    </label>
-
-                                    <!-- ===TRIER PAR=== -->
-                                    <!-- <label for="my-modal-4" class="btn modal-button mb-4">Trier par</label>
-                                    <input type="checkbox" id="my-modal-4" class="modal-toggle">
-                                    <label for="my-modal-4" class="modal cursor-pointer">
-                                        <label class="modal-box relative" for="">
-                                            <label for="my-modal-4" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                                            <h3 class="text-lg font-bold">Trie du tableau</h3>
-                                            <p class="py-4">Vous pouvez trier le tableau ci-dessous par Nom, Prénom ou Ville</p>
-                                            @include('search')
-                                        </label>
-                                    </label> -->
-
-                                    <!-- ===REINITIALISATION=== -->
                                     <form action="{{ route('research') }}" name="Reini">
                                         <div>
                                             <input type="text" name="resa" value="0" hidden>
@@ -47,19 +37,17 @@
                                         </div>
                                     </form>
                                 </div>
-                                
-                                <!-- ===FIN MODAL=== -->
 
                                 <div class="container overflow-x-auto text-black border-slate-600">
                                     <table class="table table-zebra w-full text-center border-slate-600">
                                         <thead>
-                                            <tr>
-                                                <td>Matricule</td>
-                                                <td>Nom</td>
-                                                <td>Prénom</td>
-                                                <td>Adresse</td>
-                                                <td>Ville</td>
-                                                <td>Code Labo</td>
+                                            <tr class="text-white">
+                                                <td class="bg-blue-800">Matricule</td>
+                                                <td class="bg-blue-800">Nom</td>
+                                                <td class="bg-blue-800">Prénom</td>
+                                                <td class="bg-blue-800">Adresse</td>
+                                                <td class="bg-blue-800">Ville</td>
+                                                <td class="bg-blue-800">Code Labo</td>
                                             </tr>
                                         </thead>
                                         <tbody>

@@ -16,11 +16,28 @@ class PraticienController extends Controller
         return view("praticien", ["praticien" => $praticien,"praticiens" => $praticiens]);
     }
 
-    public function getIdPraticien(Request $request)
+    public function search(Request $request)
     {
-        // dd($request);   
-        $praticien = Praticien::find($request->recherchePraticiens);
-        $praticiens = Praticien::all();
-        return view("praticien", ["praticien" => $praticien, "praticiens" => $praticiens]);
+        $res = request()->input('resa');
+        $q = request()->input('q');
+        $ville = $request->ville;
+        // dd($request);
+
+        if ($q != NULL && $ville != NULL) {
+            $praticien = Praticien::where('PRA_NOM', 'like', "$q%")
+            ->Where('PRA_VILLE', 'like', "$ville%")
+            ->get();
+        } elseif ($q != NULL) {
+            $praticien = Praticien::where('PRA_NOM', 'like', "$q%")
+            ->get();
+        } elseif ($ville != NULL) {
+            $praticien = Praticien::where('PRA_VILLE', 'like', "$ville%")
+            ->get();
+        } else {
+            $res = "";
+            $praticien = Praticien::where('PRA_NOM', 'like', "$res%")
+            ->get();
+        }
+        return view('praticien')->with('praticiens', $praticien);
     }
 }

@@ -4,38 +4,40 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use App\Models\Medicaments;
+use App\Models\Medicament;
 
 class MedicamentsController extends Controller
 {
     public function liste()
     {
-        $medicaments = Medicaments::all();
-        $medicament = Medicaments::all()->first();
+        $medicaments = Medicament::all();
+        $medicament = Medicament::all()->first();
         
         return view("medicaments", ["medicament" => $medicament,"medicaments" => $medicaments]);
     }
 
-    // public function search()
-    // {
-    //     $res = request()->input('resa');
-    //     $nom = request()->input('nom');
-    //     // dd($nom);
-    //     $prenom = request()->input('prenom');
-    //     // dd($prenom);
+    public function searchMedicaments(Request $request)
+    {
+        $res = request()->input('resa');
+        $q = request()->input('q');
+        $med = $request->med;
+        // dd($request);
 
-    //     if ($nom != NULL) {
-    //         $searchVisiteur = Visiteur::where('VIS_NOM', 'like', "$nom%")
-    //         ->get();
-    //     } elseif ($prenom != NULL) {
-    //         $searchVisiteur = Visiteur::where('VIS_PRENOM', 'like', "$prenom%")
-    //         ->get();
-    //     } else {
-    //         $res = "";
-    //         $searchVisiteur = Visiteur::where('VIS_NOM', 'like', "$res%")
-    //         ->get();
-    //     }
-        
-    //     return view('visiteur')->with('visiteurs', $searchVisiteur);
-    // }
+        if ($q != NULL && $med != NULL) {
+            $medic = Medicament::where('MED_EFFETS', 'like', "%$q%")
+            ->Where('MED_NOMCOMMERCIAL', 'like', "$med%")
+            ->get();
+        } elseif ($q != NULL) {
+            $medic = Medicament::where('MED_EFFETS', 'like', "%$q%")
+            ->get();
+        } elseif ($med != NULL) {
+            $medic = Medicament::where('MED_NOMCOMMERCIAL', 'like', "$med%")
+            ->get();
+        } else {
+            $res = "";
+            $medic = Medicament::where('MED_EFFETS', 'like', "$res%")
+            ->get();
+        }
+        return view('medicaments')->with('medicaments', $medic);
+    }
 }
