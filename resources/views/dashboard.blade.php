@@ -11,9 +11,9 @@
                     <div class="">
                         <div class="flex flex-wrap">
                             <div class="card w-96 bg-base-100 shadow-xl image-full my-auto mb-4 mr-6">
-                                <figure><img src="images/Rapports.JPG" alt="RAPPORT IMAGE" /></figure>
+                                <figure><img src="images/rapport.png" alt="RAPPORT IMAGE" class=" w-full" /></figure>
                                 <div class="card-body">
-                                    <h2 class="card-title">Rapport</h2>
+                                    <h2 class="card-title">Rapports</h2>
                                     <p>Vous pouvez voir tout vos rapport ainsi qu'en créer de nouveau !</p>
                                     <div class="card-actions justify-end">
                                         <button class="btn btn-primary" onclick="window.location.href = '/rapport';">Aller</button>
@@ -21,9 +21,9 @@
                                 </div>
                             </div>
                             <div class="card w-96 bg-base-100 shadow-xl image-full mb-4">
-                                <figure><img src="images/Praticiens.JPG" alt="Shoes" /></figure>
+                                <figure><img src="images/Praticiens.JPG" alt="PRATICIEN IMAGE" /></figure>
                                 <div class="card-body">
-                                    <h2 class="card-title">Praticien</h2>
+                                    <h2 class="card-title">Praticiens</h2>
                                     <p>Vous pouvez rechercher un practicien dans ce tableau !</p>
                                     <div class="card-actions justify-end">
                                         <button class="btn btn-primary" onclick="window.location.href = '/praticien';">Aller</button>
@@ -33,9 +33,9 @@
                         </div>
                         <div class="flex flex-wrap">
                             <div class="card w-96 bg-base-100 shadow-xl image-full my-auto mr-6">
-                                <figure><img src="images/Visiteurs.JPG" alt="Shoes" /></figure>
+                                <figure><img src="images/Visiteurs1.JPG" alt="VISITEUR IMAGE" /></figure>
                                 <div class="card-body">
-                                    <h2 class="card-title">Visiteur</h2>
+                                    <h2 class="card-title">Visiteurs</h2>
                                     <p>Vous pouvez rechercher un visiteur dans ce tableau !</p>
                                     <div class="card-actions justify-end">
                                         <button class="btn btn-primary" onclick="window.location.href = '/visiteur';">Aller</button>
@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <div class="card w-96 bg-base-100 shadow-xl image-full mb-auto">
-                                <figure><img src="images/Medicaments.JPG" alt="Shoes" /></figure>
+                                <figure><img src="images/Medicaments.JPG" alt="MEDICAMENTS IMAGE" /></figure>
                                 <div class="card-body">
                                     <h2 class="card-title">Médicaments</h2>
                                     <p>Vous pouvez rechercher un médicaments dans ce tableau !</p>

@@ -30,8 +30,8 @@
                                         {{-- NOM PRATICIEN --}}
                                         <div class="mb-8 indicator">
                                             <span class="indicator-item badge">Obligatoire</span>
-                                            <label for="exampleInputEmail1" class="form-label mr-3">Nom du Praticien :</label>
-                                            <select class="select select-bordered w-full max-w-xs" name="praticien" required>
+                                            <label for="exampleInputEmail1" class="form-label mr-3">Nom du Praticien</label>
+                                            <select class="select select-bordered w-full max-w-xs" name="praticien">
                                                 <option selected="selected" disabled>Choisissez un praticien</option>
                                                 @foreach ($praticiens as $info)
                                                     <option value="{{ $info->PRA_NUM }}">{{ $info->PRA_NOM." ".$info->PRA_PRENOM }}</option>
@@ -41,18 +41,18 @@
                                         {{-- DATE DE RAPPORT --}}
                                         <div class="mb-8 indicator">
                                             <span class="indicator-item badge">Obligatoire</span>
-                                            <label class="form-label">Date du Rapport :</label>
-                                            <input type="datetime-local" class="input input-bordered w-full max-w-xs" name="date" required>
+                                            <label class="form-label">Date du Rapport</label>
+                                            <input type="datetime-local" class="input input-bordered w-full max-w-xs" name="date">
                                         </div>
                                         {{-- BILAN RAPPORT --}}
                                         <div class="mb-8 indicator">
                                             <span class="indicator-item badge">Obligatoire</span>
-                                            <label class="form-label">Bilan du Rapport :</label>
-                                            <input type="text" placeholder="Exemple : Médecin a rappeler" class="input input-bordered w-full max-w-xs" name="bilan" required>
+                                            <label class="form-label">Bilan du Rapport</label>
+                                            <input type="text" placeholder="Exemple : Médecin a rappeler" class="input input-bordered w-full max-w-xs" name="bilan">
                                         </div>
                                         {{-- MOTIF DU RAPPORT --}}
                                         <div class="mb-12 indicator">
-                                            <label class="form-label">Motif du Rapport :</label>
+                                            <label class="form-label">Motif du Rapport</label>
                                             <input type="text" placeholder="Exemple : Cancer du poumon" class="input input-bordered w-full max-w-xs" name="motif">
                                         </div>
                                         {{-- MEDICAMENT --}}
@@ -95,6 +95,9 @@
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">Ajouter un nouveau rapport</button>
+                                        <h1>
+                                            {{-- DISPLAY INITIAL NOM & --}}
+                                        </h1>
                                     </div>
                                 </form>
                             </div>

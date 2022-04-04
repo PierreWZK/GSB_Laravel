@@ -44,10 +44,12 @@ class RapportController extends Controller
     {
         //VALIDATE RAPPORT
         $request->validate([
-            'PRA_NUM' => ['required', 'string'],
-            'RAP_DATE' => ['required', 'date'],
-            'RAP_BILAN' => ['required', 'string'],
-            'RAP_MOTIF' => ['nullable', 'string']
+            'praticien' => ['required', 'string'],
+            'date' => ['required', 'date'],
+            'bilan' => ['required', 'string'],
+            'motif' => ['nullable', 'string'],
+            ['medocs' => ['nullable', 'string']],
+            ['qte' => ['nullable', 'int']],
         ]);
 
         // Rapport store
@@ -61,15 +63,18 @@ class RapportController extends Controller
         $rapport->RAP_MOTIF = $request->motif;
         $rapport->save();
 
+        // FLASH 
+        session()->flash('success', 'Rapport ajouté avec succès');
+
         //Recup first RAP_NUM with order by desc
         $lastRapport = Rapport::orderByDesc("RAP_NUM")->first();
 
 
         // Médicaments store
-        $medoc = new Offrir();
-        $medoc->VIS_MATRICULE = $rapport->VIS_MATRICULE;
-        $medoc->RAP_NUM = $lastRapport->RAP_NUM;
         if ($request->qte1 != 0 && $request->qte2 !=0) {
+            $medoc = new Offrir();
+            $medoc->VIS_MATRICULE = $rapport->VIS_MATRICULE;
+            $medoc->RAP_NUM = $lastRapport->RAP_NUM;
             $medoc->MED_DEPOTLEGAL = $request->medoc1;
             $medoc->OFF_QTE = $request->qte1;
             $medoc->save();
@@ -78,14 +83,22 @@ class RapportController extends Controller
             $medoc->RAP_NUM = $lastRapport->RAP_NUM;
             $medoc->MED_DEPOTLEGAL = $request->medoc2;
             $medoc->OFF_QTE = $request->qte2;
+            $medoc->save();
         } elseif ($request->qte1 != 0) {
+            $medoc = new Offrir();
+            $medoc->VIS_MATRICULE = $rapport->VIS_MATRICULE;
+            $medoc->RAP_NUM = $lastRapport->RAP_NUM;
             $medoc->MED_DEPOTLEGAL = $request->medoc1;
             $medoc->OFF_QTE = $request->qte1;
+            $medoc->save();
         } elseif ($request->qte2 != 0) {
+            $medoc = new Offrir();
+            $medoc->VIS_MATRICULE = $rapport->VIS_MATRICULE;
+            $medoc->RAP_NUM = $lastRapport->RAP_NUM;
             $medoc->MED_DEPOTLEGAL = $request->medoc2;
             $medoc->OFF_QTE = $request->qte2;
+            $medoc->save();
         }
-        $medoc->save();
 
         return redirect('/rapport');
     }
