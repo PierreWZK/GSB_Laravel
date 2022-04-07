@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Rapport;
+use App\Models\Visiteur;
 use App\Models\Offrir;
 use App\Models\Medicament;
 use App\Models\Praticien;
 use Illuminate\Support\Facades\Auth;
+// use PDF;
 
 class RapportController extends Controller
 {
@@ -21,14 +23,14 @@ class RapportController extends Controller
         $rapports = Rapport::join('praticien', 'rapport_visite.PRA_NUM', '=', 'praticien.PRA_NUM')
             ->where('rapport_visite.VIS_MATRICULE', $id)
             ->get();
-        
-        // Afficher offrir dans le rapport 
+
+        // Afficher offrir dans le rapport
         $medocsQte = Offrir::join('medicament', 'offrir.MED_DEPOTLEGAL', '=', 'medicament.MED_DEPOTLEGAL')
             ->where('offrir.VIS_MATRICULE', $id)
             ->get();
-        
-            return view("rapport", ["rapports" => $rapports, "medocsQte" => $medocsQte]);
-        }
+
+        return view("rapport", ["rapports" => $rapports, "medocsQte" => $medocsQte]);
+    }
 
     // PraticienRapport
     public function rapportVisiteur()
@@ -36,7 +38,7 @@ class RapportController extends Controller
         $praticiens = Praticien::all();
         $medocs = Medicament::all();
 
-        return view("nouveauRapport", ["praticiens" => $praticiens, "medocs" => $medocs]);        
+        return view("nouveauRapport", ["praticiens" => $praticiens, "medocs" => $medocs]);
     }
 
     // NouveauRapport
@@ -63,7 +65,7 @@ class RapportController extends Controller
         $rapport->RAP_MOTIF = $request->motif;
         $rapport->save();
 
-        // FLASH 
+        // FLASH
         session()->flash('success', 'Rapport ajouté avec succès');
 
         //Recup first RAP_NUM with order by desc
@@ -71,7 +73,7 @@ class RapportController extends Controller
 
 
         // Médicaments store
-        if ($request->qte1 != 0 && $request->qte2 !=0) {
+        if ($request->qte1 != 0 && $request->qte2 != 0) {
             $medoc = new Offrir();
             $medoc->VIS_MATRICULE = $rapport->VIS_MATRICULE;
             $medoc->RAP_NUM = $lastRapport->RAP_NUM;
@@ -114,19 +116,41 @@ class RapportController extends Controller
 
         if ($nom != NULL) {
             $searchPra = Praticien::where('VIS_NOM', 'like', "$nom%")
-            ->get();
+                ->get();
         } elseif ($prenom != NULL) {
             $searchPra = Praticien::where('Vis_NOM', 'like', "$prenom%")
-            ->get();
+                ->get();
         } elseif ($ville != NULL) {
             $searchPra = Praticien::where('VIS_ADRESSE', 'like', "$ville%")
-            ->get();
+                ->get();
         } else {
             $res = "";
             $searchPra = Praticien::where('VIS_NOM', 'like', "$res%")
-            ->get();
+                ->get();
         }
-        
+
         return view('praticien')->with('praticiens', $searchPra);
+    }
+
+    // CONSTRUCTION PDF
+    public function pdf($id)
+    {
+        // Afficher Rapport
+        $rapports = Rapport::join('praticien', 'rapport_visite.PRA_NUM', '=', 'praticien.PRA_NUM')
+            ->where('rapport_visite.RAP_NUM', $id)
+            ->first();
+
+        // Afficher Offrir
+        $medico = Offrir::join('medicament', 'offrir.MED_DEPOTLEGAL', '=', 'medicament.MED_DEPOTLEGAL')
+            ->where('offrir.RAP_NUM', $id)
+            ->first();
+
+        // Afficher Praticiens
+        $praticiens = Praticien::join('rapport_visite', 'praticien.PRA_NUM', '=', 'rapport_visite.PRA_NUM')
+            ->where('rapport_visite.RAP_NUM', $id)
+            ->first();
+
+        // $pdf = PDF::loadView('pdf', ["rapports" => $rapports, "medico" => $medico, "praticiens"=> $praticiens]);
+        // return $pdf->stream();
     }
 }

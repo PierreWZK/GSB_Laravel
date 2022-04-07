@@ -21,17 +21,34 @@ class PraticienController extends Controller
         $res = request()->input('resa');
         $q = request()->input('q');
         $ville = $request->ville;
+        $type = $request->type;
         // dd($request);
 
-        if ($q != NULL && $ville != NULL) {
+        if ($q != NULL && $ville != NULL && $type != NULL) {
             $praticien = Praticien::where('PRA_NOM', 'like', "$q%")
             ->Where('PRA_VILLE', 'like', "$ville%")
+            ->Where('TYP_CODE', 'like', "$type%")
+            ->get();
+        } elseif ($q != NULL && $ville != NULL) {
+            $praticien = Praticien::where('PRA_NOM', 'like', "$q%")
+            ->Where('PRA_VILLE', 'like', "$ville%")
+            ->get();
+        } elseif ($ville != NULL && $type != NULL) {
+            $praticien = Praticien::where('PRA_VILLE', 'like', "$ville%")
+            ->Where('TYP_CODE', 'like', "$type%")
+            ->get();
+        } elseif ($q != NULL && $type != NULL) {
+            $praticien = Praticien::where('PRA_NOM', 'like', "$q%")
+            ->Where('TYP_CODE', 'like', "$type%")
             ->get();
         } elseif ($q != NULL) {
             $praticien = Praticien::where('PRA_NOM', 'like', "$q%")
             ->get();
         } elseif ($ville != NULL) {
             $praticien = Praticien::where('PRA_VILLE', 'like', "$ville%")
+            ->get();
+        } elseif ($type != NULL) {
+            $praticien = Praticien::where('TYP_CODE', 'like', "$type%")
             ->get();
         } else {
             $res = "";

@@ -23,12 +23,11 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-#Aissam snap : lz-aissam (que les meufs)
-
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/rapport',[App\Http\Controllers\RapportController::class,'liste'])->name('rapport');
+    Route::get('/rapport/{id}',[App\Http\Controllers\RapportController::class,'pdf'])->name('pdf');
     
     Route::post('/nouveauRapport',[App\Http\Controllers\RapportController::class,'store'])->name('nouveauRapport');
     Route::get('/nouveauRapport',[App\Http\Controllers\RapportController::class,'rapportVisiteur'])->name('rapportVisiteur');

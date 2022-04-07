@@ -26,6 +26,16 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="form-group mb-0 mr-1">
+                                        <select name="type" class="input input-bordered w-full max-w-xs">
+                                            <option selected="selected" disabled>Filtre par Fonction</option>
+                                            <option value="MH">Médecin Hospitalier</option>
+                                            <option value="MV">Médecin de Ville</option>
+                                            <option value="PS">Pharmacien Hospitalier</option>
+                                            <option value="PH">Personnel de santé</option>
+                                            <option value="PO">Pharmacien Officine</option>
+                                        </select>
+                                    </div>
                                     <button type="submit" class="btn btn-xs sm:btn-sm md:btn-md lg:btn-md mb-1 ml-2">Chercher</button>
                                 </form>
                                 

@@ -23,8 +23,8 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-md-8">
-                                <div class ="container overflow-x-auto text-black border-slate-600">
                                 <button class="btn btn-xs sm:btn-sm md:btn-md lg:btn-md mb-4" onclick="window.location.href = '/nouveauRapport';">Nouveau Rapport</button>
+                                <div class ="container overflow-x-auto text-black border-slate-600">
                                     <table class="table table-zebra w-full text-center border-slate-600">
                                         <thead>
                                             <tr class="text-white">
@@ -41,7 +41,7 @@
                                                 @foreach($rapports as $info)
                                                 <tr>
                                                     <td>
-                                                        <a href=""><img src="https://img.icons8.com/material-rounded/96/000000/download--v1.png"/></a>
+                                                        <a href="{{ route('pdf', ['id'=>$info->RAP_NUM]) }}" target="blank"><img src="https://img.icons8.com/material-rounded/96/000000/download--v1.png"/></a>
                                                     </td>
                                                     <td>
                                                         <p>{{ $info->PRA_PRENOM }} {{ $info->PRA_NOM }}</p>
