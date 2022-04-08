@@ -10,7 +10,7 @@ use App\Models\Offrir;
 use App\Models\Medicament;
 use App\Models\Praticien;
 use Illuminate\Support\Facades\Auth;
-// use PDF;
+use PDF;
 
 class RapportController extends Controller
 {
@@ -140,17 +140,34 @@ class RapportController extends Controller
             ->where('rapport_visite.RAP_NUM', $id)
             ->first();
 
-        // Afficher Offrir
-        $medico = Offrir::join('medicament', 'offrir.MED_DEPOTLEGAL', '=', 'medicament.MED_DEPOTLEGAL')
-            ->where('offrir.RAP_NUM', $id)
-            ->first();
+        // Afficher la Qte de Médicament du rapport en cours
+        $medicoQte = Offrir::where('offrir.RAP_NUM', $id)
+            ->get()->count();
+        // Si 0 alors pas de médicament, si 1 alors 1 médicament (first), si 2 alors 2 médicaments(get)
+        if ($medicoQte == 0) {
+            $medicoName = '';
+        } elseif ($medicoQte == 1) {
+            $medicoName = Offrir::join('medicament', 'offrir.MED_DEPOTLEGAL', '=', 'medicament.MED_DEPOTLEGAL')
+                ->where('offrir.RAP_NUM', $id)
+                ->first();
+        } elseif ($medicoQte > 1) {
+            $medicoName = Offrir::join('medicament', 'offrir.MED_DEPOTLEGAL', '=', 'medicament.MED_DEPOTLEGAL')
+                ->where('offrir.RAP_NUM', $id)
+                ->get();
+        }
 
         // Afficher Praticiens
         $praticiens = Praticien::join('rapport_visite', 'praticien.PRA_NUM', '=', 'rapport_visite.PRA_NUM')
             ->where('rapport_visite.RAP_NUM', $id)
             ->first();
 
-        // $pdf = PDF::loadView('pdf', ["rapports" => $rapports, "medico" => $medico, "praticiens"=> $praticiens]);
-        // return $pdf->stream();
+        // Erreur en interface code, mais pose aucun problèmes au niveau de l'interface utilisateur
+        $pdf = PDF::loadView('pdf', ["rapports" => $rapports, "medicoQte" => $medicoQte, "medicoName" => $medicoName, "praticiens"=> $praticiens]);
+        
+        //return (download le PDF)
+        // $pdf->download('rapport.pdf');
+
+        // return (affiche le PDF);
+        return $pdf->stream();
     }
 }

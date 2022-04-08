@@ -119,6 +119,7 @@ class Connection
      * The parameters used during creation of the Connection instance.
      *
      * @var array<string,mixed>
+     * @phpstan-var array<string,mixed>
      * @psalm-var Params
      */
     private $params;
@@ -214,6 +215,7 @@ class Connection
      *
      * @return array<string,mixed>
      * @psalm-return Params
+     * @phpstan-return array<string,mixed>
      */
     public function getParams()
     {
@@ -623,7 +625,7 @@ class Connection
      * @param array<string, mixed>                                                 $criteria Deletion criteria
      * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types    Parameter types
      *
-     * @return int|string The number of affected rows.
+     * @return int The number of affected rows.
      *
      * @throws Exception
      */
@@ -660,7 +662,7 @@ class Connection
      *
      * @param int $level The level to set.
      *
-     * @return int|string
+     * @return int
      *
      * @throws Exception
      */
@@ -697,7 +699,7 @@ class Connection
      * @param array<string, mixed>                                                 $criteria Update criteria
      * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types    Parameter types
      *
-     * @return int|string The number of affected rows.
+     * @return int The number of affected rows.
      *
      * @throws Exception
      */
@@ -732,7 +734,7 @@ class Connection
      * @param array<string, mixed>                                                 $data  Column-value pairs
      * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types Parameter types
      *
-     * @return int|string The number of affected rows.
+     * @return int The number of affected rows.
      *
      * @throws Exception
      */
@@ -1125,7 +1127,7 @@ class Connection
      * @param list<mixed>|array<string, mixed>                                     $params Statement parameters
      * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types  Parameter types
      *
-     * @return int|string The number of affected rows.
+     * @return int The number of affected rows.
      *
      * @throws Exception
      */

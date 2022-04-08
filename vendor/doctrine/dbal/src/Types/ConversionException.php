@@ -27,7 +27,7 @@ class ConversionException extends Exception
     /**
      * Thrown when a Database to Doctrine Type Conversion fails.
      *
-     * @param mixed  $value
+     * @param string $value
      * @param string $toType
      *
      * @return ConversionException
@@ -43,7 +43,7 @@ class ConversionException extends Exception
      * Thrown when a Database to Doctrine Type Conversion fails and we can make a statement
      * about the expected format.
      *
-     * @param mixed  $value
+     * @param string $value
      * @param string $toType
      * @param string $expectedFormat
      *
