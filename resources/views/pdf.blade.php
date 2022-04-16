@@ -33,7 +33,7 @@
 
 <body>
     <div class="text-center">
-        <img src="images/2.png" alt="GSB">
+        <img src="images/1.png" alt="GSB">
     </div>
     
     <h2>Rapport de visite</h2>
