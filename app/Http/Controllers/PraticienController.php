@@ -28,7 +28,7 @@ class PraticienController extends Controller
             $praticien = Praticien::join('type_praticien', 'praticien.TYP_CODE', '=', 'type_praticien.TYP_CODE')
             ->Where('PRA_NOM', 'like', "$q%")
             ->Where('PRA_VILLE', 'like', "$ville%")
-            ->Where('type_praticien.TYP_CODE', 'like', "$type%")
+            ->Where('praticien.TYP_CODE', 'like', "$type%")
             ->get();
         } elseif ($q != NULL && $ville != NULL) {
             $praticien = Praticien::join('type_praticien', 'praticien.TYP_CODE', '=', 'type_praticien.TYP_CODE')
@@ -38,12 +38,12 @@ class PraticienController extends Controller
         } elseif ($ville != NULL && $type != NULL) {
             $praticien = Praticien::join('type_praticien', 'praticien.TYP_CODE', '=', 'type_praticien.TYP_CODE')
             ->Where('PRA_VILLE', 'like', "$ville%")
-            ->Where('type_praticien.TYP_CODE', 'like', "$type%")
+            ->Where('praticien.TYP_CODE', 'like', "$type%")
             ->get();
         } elseif ($q != NULL && $type != NULL) {
             $praticien = Praticien::join('type_praticien', 'praticien.TYP_CODE', '=', 'type_praticien.TYP_CODE')
             ->Where('PRA_NOM', 'like', "$q%")
-            ->Where('type_praticien.TYP_CODE', 'like', "$type%")
+            ->Where('praticien.TYP_CODE', 'like', "$type%")
             ->get();
         } elseif ($q != NULL) {
             $praticien = Praticien::join('type_praticien', 'praticien.TYP_CODE', '=', 'type_praticien.TYP_CODE')
@@ -55,7 +55,7 @@ class PraticienController extends Controller
             ->get();
         } elseif ($type != NULL) {
             $praticien = Praticien::join('type_praticien', 'praticien.TYP_CODE', '=', 'type_praticien.TYP_CODE')
-            ->Where('type_praticien.TYP_CODE', 'like', "$type%")
+            ->Where('praticien.TYP_CODE', 'like', "$type%")
             ->get();
         } else {
             $res = "";
