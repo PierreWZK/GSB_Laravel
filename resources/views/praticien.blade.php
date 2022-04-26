@@ -81,17 +81,7 @@
                                                     <p>{{ $info->PRA_COEFNOTORIETE }}</p>
                                                 </td>
                                                 <td>
-                                                    @if ($info->TYP_CODE == "MH")
-                                                        <p>Médecin Hospitalier</p>        
-                                                    @elseif ($info->TYP_CODE == "MV")
-                                                        <p>Médecin de Ville</p>    
-                                                    @elseif ($info->TYP_CODE == "PH")
-                                                        <p>Pharmacien Hospitalier</p>
-                                                    @elseif ($info->TYP_CODE == "PO")
-                                                        <p>Pharmacien Officine</p>
-                                                    @elseif ($info->TYP_CODE == "PS")
-                                                        <p>Personnel de santé</p>
-                                                    @endif
+                                                    <p>{{ $info->TYP_LIBELLE }}</p>
                                                 </td>
                                             </tr>
                                             @endforeach

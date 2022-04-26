@@ -10,10 +10,10 @@ class PraticienController extends Controller
 {
     public function liste()
     {
-        $praticiens = Praticien::all();
-        $praticien = Praticien::all()->first();
-        
-        return view("praticien", ["praticien" => $praticien,"praticiens" => $praticiens]);
+        $praticiens = Praticien::join('type_praticien', 'praticien.TYP_CODE', '=', 'type_praticien.TYP_CODE')
+            ->get();
+        // $typePra = TypePraticien::all();       
+        return view("praticien", ["praticiens" => $praticiens]);
     }
 
     public function search(Request $request)
@@ -25,34 +25,42 @@ class PraticienController extends Controller
         // dd($request);
 
         if ($q != NULL && $ville != NULL && $type != NULL) {
-            $praticien = Praticien::where('PRA_NOM', 'like', "$q%")
+            $praticien = Praticien::join('type_praticien', 'praticien.TYP_CODE', '=', 'type_praticien.TYP_CODE')
+            ->Where('PRA_NOM', 'like', "$q%")
             ->Where('PRA_VILLE', 'like', "$ville%")
-            ->Where('TYP_CODE', 'like', "$type%")
+            ->Where('type_praticien.TYP_CODE', 'like', "$type%")
             ->get();
         } elseif ($q != NULL && $ville != NULL) {
-            $praticien = Praticien::where('PRA_NOM', 'like', "$q%")
+            $praticien = Praticien::join('type_praticien', 'praticien.TYP_CODE', '=', 'type_praticien.TYP_CODE')
+            ->Where('PRA_NOM', 'like', "$q%")
             ->Where('PRA_VILLE', 'like', "$ville%")
             ->get();
         } elseif ($ville != NULL && $type != NULL) {
-            $praticien = Praticien::where('PRA_VILLE', 'like', "$ville%")
-            ->Where('TYP_CODE', 'like', "$type%")
+            $praticien = Praticien::join('type_praticien', 'praticien.TYP_CODE', '=', 'type_praticien.TYP_CODE')
+            ->Where('PRA_VILLE', 'like', "$ville%")
+            ->Where('type_praticien.TYP_CODE', 'like', "$type%")
             ->get();
         } elseif ($q != NULL && $type != NULL) {
-            $praticien = Praticien::where('PRA_NOM', 'like', "$q%")
-            ->Where('TYP_CODE', 'like', "$type%")
+            $praticien = Praticien::join('type_praticien', 'praticien.TYP_CODE', '=', 'type_praticien.TYP_CODE')
+            ->Where('PRA_NOM', 'like', "$q%")
+            ->Where('type_praticien.TYP_CODE', 'like', "$type%")
             ->get();
         } elseif ($q != NULL) {
-            $praticien = Praticien::where('PRA_NOM', 'like', "$q%")
+            $praticien = Praticien::join('type_praticien', 'praticien.TYP_CODE', '=', 'type_praticien.TYP_CODE')
+            ->Where('PRA_NOM', 'like', "$q%")
             ->get();
         } elseif ($ville != NULL) {
-            $praticien = Praticien::where('PRA_VILLE', 'like', "$ville%")
+            $praticien = Praticien::join('type_praticien', 'praticien.TYP_CODE', '=', 'type_praticien.TYP_CODE')
+            ->Where('PRA_VILLE', 'like', "$ville%")
             ->get();
         } elseif ($type != NULL) {
-            $praticien = Praticien::where('TYP_CODE', 'like', "$type%")
+            $praticien = Praticien::join('type_praticien', 'praticien.TYP_CODE', '=', 'type_praticien.TYP_CODE')
+            ->Where('type_praticien.TYP_CODE', 'like', "$type%")
             ->get();
         } else {
             $res = "";
-            $praticien = Praticien::where('PRA_NOM', 'like', "$res%")
+            $praticien = Praticien::join('type_praticien', 'praticien.TYP_CODE', '=', 'type_praticien.TYP_CODE')
+            ->Where('PRA_NOM', 'like', "$res%")
             ->get();
         }
         return view('praticien')->with('praticiens', $praticien);
