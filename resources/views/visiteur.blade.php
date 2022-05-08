@@ -52,26 +52,28 @@
                                         </thead>
                                         <tbody>
                                             @foreach($visiteurs as $info)
-                                            <tr>
-                                                <td>
-                                                    <p>{{ $info->VIS_MATRICULE }}</p>
-                                                </td>
-                                                <td>
-                                                    <p>{{ $info->VIS_NOM }}</p>
-                                                </td>
-                                                <td>
-                                                    <p>{{ $info->Vis_PRENOM }}</p>
-                                                </td>
-                                                <td>
-                                                    <p>{{ $info->VIS_ADRESSE }}</p>
-                                                </td>
-                                                <td>
-                                                    <p>{{ $info->VIS_VILLE }}, {{ $info->VIS_CP }}</p>
-                                                </td>
-                                                <td>
-                                                    <p>{{ $info->LAB_CODE }}</p>
-                                                </td>
-                                            </tr>
+                                                @if ($info->VIS_MATRICULE != "aaa")
+                                                <tr>
+                                                    <td>
+                                                        <p>{{ $info->VIS_MATRICULE }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>{{ $info->VIS_NOM }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>{{ $info->Vis_PRENOM }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>{{ $info->VIS_ADRESSE }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>{{ $info->VIS_VILLE }}, {{ $info->VIS_CP }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>{{ $info->LAB_CODE }}</p>
+                                                    </td>
+                                                </tr>
+                                                @endif
                                             @endforeach
                                         </tbody>
                                     </table>
