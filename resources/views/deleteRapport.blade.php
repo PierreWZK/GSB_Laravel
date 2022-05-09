@@ -50,8 +50,9 @@
                                                         <label for="my-modal-{{$i}}" class="modal cursor-pointer">
                                                             <label class="modal-box relative" for="">
                                                                 <label for="my-modal-{{$i}}" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                                                                <h3 class="text-2xl font-bold whitespace-normal	mt-4">Etes-vous sûr de vouloir supprimez ce rapport ?</h3>
-                                                                <button class="btn btn-xs sm:btn-sm md:btn-md lg:btn-md my-4 btn-error" onclick="window.location.href = 'deleteRapport/{{$info->RAP_NUM}}'">Oui</button>
+                                                                <h3 class="text-2xl font-bold whitespace-normal	my-4">Etes-vous sûr de vouloir supprimez ce rapport ?</h3>
+                                                                <button class="btn btn-error btn-xs sm:btn-sm md:btn-md lg:btn-md my-4" onclick="window.location.href = 'deleteRapport/{{$info->RAP_NUM}}'">Oui</button>
+                                                                <label for="my-modal-{{$i}}" class="btn btn-xs sm:btn-sm md:btn-md lg:btn-md ml-4 my-4">Annuler</label>
                                                             </label>
                                                         </label>
                                                         </td>

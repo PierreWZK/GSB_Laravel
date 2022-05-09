@@ -138,8 +138,9 @@
                                         <label for="my-modal-4" class="modal cursor-pointer">
                                             <label class="modal-box relative" for="">
                                                 <label for="my-modal-4" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                                                <h3 class="text-2xl font-bold whitespace-normal	mt-4">Etes-vous sûr de vouloir modifier ce rapport ?</h3>
-                                                <button type="submit" class="btn btn-xs sm:btn-sm md:btn-md lg:btn-md my-4">Modifier le rapport</button>
+                                                <h3 class="text-2xl font-bold whitespace-normal	my-4">Etes-vous sûr de vouloir modifier ce rapport ?</h3>
+                                                <button type="submit" class="btn btn-warning btn-xs sm:btn-sm md:btn-md lg:btn-md my-4">Modifier le rapport</button>
+                                                <label for="my-modal-4" class="btn btn-xs sm:btn-sm md:btn-md lg:btn-md ml-4 my-4">Annuler</label>
                                             </label>
                                         </label>
                                     </div>
