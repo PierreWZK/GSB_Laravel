@@ -44,8 +44,10 @@
                         <div class="row justify-content-center">
                             <div class="col-md-8">
                                 <button class="btn btn-xs sm:btn-sm md:btn-md lg:btn-md mb-4 btn-success" onclick="window.location.href = '/nouveauRapport';">Nouveau Rapport</button>
-                                <button class="btn btn-xs sm:btn-sm md:btn-md lg:btn-md mb-4 btn-error" onclick="window.location.href = '/deleteRapport';">Supprimer un Rapport</button>
-                                <button class="btn btn-xs sm:btn-sm md:btn-md lg:btn-md mb-4 btn-primary" onclick="window.location.href = '/updateRapportListe';">Modifier un Rapport</button>
+                                @if (!session('empty'))
+                                    <button class="btn btn-xs sm:btn-sm md:btn-md lg:btn-md mb-4 btn-error" onclick="window.location.href = '/deleteRapport';">Supprimer un Rapport</button>
+                                    <button class="btn btn-xs sm:btn-sm md:btn-md lg:btn-md mb-4 btn-primary" onclick="window.location.href = '/updateRapportListe';">Modifier un Rapport</button>
+                                @endif
                                 <div class ="container overflow-x-auto text-black border-slate-600">
                                     @if (session('empty'))
                                     <div class="alert alert-warning shadow-lg my-9">
