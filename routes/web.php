@@ -28,7 +28,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/rapport',[App\Http\Controllers\RapportController::class,'liste'])->name('rapport');
     Route::get('/rapport/{id}',[App\Http\Controllers\RapportController::class,'pdf'])->name('pdf');
-    
+
+    Route::get('/updateRapportListe',[App\Http\Controllers\RapportController::class,'listeUpdateListe'])->name('updateRapportListe');
+    Route::post('/updateRapport/{id}',[App\Http\Controllers\RapportController::class,'updateRapport'])->name('updateRapport');
+    Route::get('/updateRapport/{id}',[App\Http\Controllers\RapportController::class,'listeUpdate'])->name('updateRapportVisiteur');
+
+    Route::get('/deleteRapport',[App\Http\Controllers\RapportController::class,'listeDeleteListe'])->name('deleteRapportListe');
+    Route::get('/deleteRapport/{id}',[App\Http\Controllers\RapportController::class,'deleteRapport'])->name('deleteRapport');
+
     Route::post('/nouveauRapport',[App\Http\Controllers\RapportController::class,'store'])->name('nouveauRapport');
     Route::get('/nouveauRapport',[App\Http\Controllers\RapportController::class,'rapportVisiteur'])->name('rapportVisiteur');
     

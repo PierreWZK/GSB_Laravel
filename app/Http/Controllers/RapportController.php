@@ -29,6 +29,18 @@ class RapportController extends Controller
             ->where('offrir.VIS_MATRICULE', $id)
             ->get();
 
+        // AFFICHAGE POUR ADMIN
+        // if($id == "aaa") {
+        //     $rapports = Rapport::join('praticien', 'rapport_visite.PRA_NUM', '=', 'praticien.PRA_NUM')
+        //         ->get();
+        //     $medocsQte = Offrir::join('medicament', 'offrir.MED_DEPOTLEGAL', '=', 'medicament.MED_DEPOTLEGAL')
+        //         ->get();
+        // } else
+        
+        if ($rapports->isEmpty()) {
+            session()->flash('empty', 'Aucun rapport existant');
+        }
+
         return view("rapport", ["rapports" => $rapports, "medocsQte" => $medocsQte]);
     }
 
@@ -164,10 +176,138 @@ class RapportController extends Controller
         // Erreur en interface code, mais pose aucun problèmes au niveau de l'interface utilisateur
         $pdf = PDF::loadView('pdf', ["rapports" => $rapports, "medicoQte" => $medicoQte, "medicoName" => $medicoName, "praticiens"=> $praticiens]);
         
-        //return (download le PDF)
-        // $pdf->download('rapport.pdf');
-
         // return (affiche le PDF);
         return $pdf->stream();
     }
+
+    /* Update Rapport */
+
+    // Liste for Table (UpdateRapport)
+    public function listeUpdateListe()
+    {
+        $id = Auth::user()->VIS_MATRICULE;
+        $rapports = Rapport::join('praticien', 'rapport_visite.PRA_NUM', '=', 'praticien.PRA_NUM')
+            ->where('rapport_visite.VIS_MATRICULE', $id)
+            ->get();
+
+        // Afficher offrir dans le rapport
+        $medocsQte = Offrir::join('medicament', 'offrir.MED_DEPOTLEGAL', '=', 'medicament.MED_DEPOTLEGAL')
+            ->where('offrir.VIS_MATRICULE', $id)
+            ->get();
+
+        if ($rapports->isEmpty()) {
+            session()->flash('empty', 'Aucun rapport existant');
+        }
+
+        return view('updateRapportListe', ["rapports" => $rapports, "medocsQte" => $medocsQte]);
+    }
+
+    // Update Rapport (List for value in Forms)
+    public function listeUpdate($id)
+    {
+        $praticiens = Praticien::all();
+        $rapports = Rapport::Where('RAP_NUM', $id)->first();
+        $rapportsMedico = Medicament::join('offrir', 'offrir.MED_DEPOTLEGAL', '=', 'medicament.MED_DEPOTLEGAL')
+            ->where('offrir.RAP_NUM', $id)->get();
+        $medocs = Medicament::all();
+        $rapportsMedicoCount = $rapportsMedico->count();
+
+        return view("updateRapport", ["praticiens" => $praticiens, "rapports" => $rapports, "medocs" => $medocs, "rapportsMedico" => $rapportsMedico, "rapportsMedicoCount" => $rapportsMedicoCount]);
+    }
+
+    // Update Rapport (Submit)
+    public function updateRapport(Request $request, $id)
+    {
+        //VALIDATE RAPPORT
+        $request->validate([
+            'praticien' => ['required', 'string'],
+            'date' => ['required', 'date'],
+            'bilan' => ['required', 'string'],
+            'motif' => ['nullable', 'string'],
+            ['medocs' => ['nullable', 'string']],
+            ['qte' => ['nullable', 'int']],
+        ]);
+        
+        // UPDATE RAPPORT
+        Offrir::Where('RAP_NUM', $id)->delete();
+        // Médicaments store
+        $matricule = Auth::user()->VIS_MATRICULE;
+        if ($request->qte1 != 0 && $request->qte2 != 0) {
+            $medoc = new Offrir();
+            $medoc->VIS_MATRICULE = $matricule;
+            $medoc->RAP_NUM = $id;
+            $medoc->MED_DEPOTLEGAL = $request->medoc1;
+            $medoc->OFF_QTE = $request->qte1;
+            $medoc->save();
+            $medoc = new Offrir();
+            $medoc->VIS_MATRICULE = $matricule;
+            $medoc->RAP_NUM = $id;
+            $medoc->MED_DEPOTLEGAL = $request->medoc2;
+            $medoc->OFF_QTE = $request->qte2;
+            $medoc->save();
+        } elseif ($request->qte1 != 0) {
+            $medoc = new Offrir();
+            $medoc->VIS_MATRICULE = $matricule;
+            $medoc->RAP_NUM = $id;
+            $medoc->MED_DEPOTLEGAL = $request->medoc1;
+            $medoc->OFF_QTE = $request->qte1;
+            $medoc->save();
+        } elseif ($request->qte2 != 0) {
+            $medoc = new Offrir();
+            $medoc->VIS_MATRICULE = $matricule;
+            $medoc->RAP_NUM = $id;
+            $medoc->MED_DEPOTLEGAL = $request->medoc2;
+            $medoc->OFF_QTE = $request->qte2;
+            $medoc->save();
+        }
+        Rapport::Where('RAP_NUM', $id)->update(
+            ['RAP_NUM' => $id,
+            'VIS_MATRICULE' => Auth::user()->VIS_MATRICULE,
+            'PRA_NUM' => $request->praticien,
+            'RAP_DATE' => $request->date,
+            'RAP_BILAN' => $request->bilan,
+            'RAP_MOTIF' => $request->motif,]
+        );
+
+        // Offrir::Where('RAP_NUM', $id)->delete();
+        // Rapport::Where('RAP_NUM', $id)->delete();
+
+        session()->flash('update', 'Le rapport numéro '.$id.' à été modifié avec succès');
+        
+        return redirect('/rapport');
+    }
+    /* Update Rapport */
+
+    /* Delete Rapport */
+
+    // Liste for Table (UpdateRapport)
+    public function listeDeleteListe()
+    {
+        $id = Auth::user()->VIS_MATRICULE;
+        $rapports = Rapport::join('praticien', 'rapport_visite.PRA_NUM', '=', 'praticien.PRA_NUM')
+            ->where('rapport_visite.VIS_MATRICULE', $id)
+            ->get();
+
+        // Afficher offrir dans le rapport
+        $medocsQte = Offrir::join('medicament', 'offrir.MED_DEPOTLEGAL', '=', 'medicament.MED_DEPOTLEGAL')
+            ->where('offrir.VIS_MATRICULE', $id)
+            ->get();
+
+        if ($rapports->isEmpty()) {
+            session()->flash('empty', 'Aucun rapport existant');
+        }
+
+        return view('deleteRapport', ["rapports" => $rapports, "medocsQte" => $medocsQte]);
+    }
+
+    // DELETE RAPPORT
+    public function deleteRapport($id)
+    {
+        Offrir::Where('RAP_NUM', $id)->delete();
+        Rapport::Where('RAP_NUM', $id)->delete();
+        
+        session()->flash('delete', 'Le rapport numéro '.$id.' à été supprimé avec succès');
+
+        return redirect('/rapport');
+    } 
 }
