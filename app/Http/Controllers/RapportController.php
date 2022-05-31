@@ -36,7 +36,7 @@ class RapportController extends Controller
         //     $medocsQte = Offrir::join('medicament', 'offrir.MED_DEPOTLEGAL', '=', 'medicament.MED_DEPOTLEGAL')
         //         ->get();
         // } else
-        
+
         if ($rapports->isEmpty()) {
             session()->flash('empty', 'Aucun rapport existant');
         }
@@ -175,7 +175,7 @@ class RapportController extends Controller
 
         // Erreur en interface code, mais pose aucun problèmes au niveau de l'interface utilisateur
         $pdf = PDF::loadView('pdf', ["rapports" => $rapports, "medicoQte" => $medicoQte, "medicoName" => $medicoName, "praticiens"=> $praticiens]);
-        
+
         // return (affiche le PDF);
         return $pdf->stream();
     }
@@ -227,39 +227,42 @@ class RapportController extends Controller
             ['medocs' => ['nullable', 'string']],
             ['qte' => ['nullable', 'int']],
         ]);
-        
+
         // UPDATE RAPPORT
-        Offrir::Where('RAP_NUM', $id)->delete();
-        // Médicaments store
-        $matricule = Auth::user()->VIS_MATRICULE;
-        if ($request->qte1 != 0 && $request->qte2 != 0) {
-            $medoc = new Offrir();
-            $medoc->VIS_MATRICULE = $matricule;
-            $medoc->RAP_NUM = $id;
-            $medoc->MED_DEPOTLEGAL = $request->medoc1;
-            $medoc->OFF_QTE = $request->qte1;
-            $medoc->save();
-            $medoc = new Offrir();
-            $medoc->VIS_MATRICULE = $matricule;
-            $medoc->RAP_NUM = $id;
-            $medoc->MED_DEPOTLEGAL = $request->medoc2;
-            $medoc->OFF_QTE = $request->qte2;
-            $medoc->save();
-        } elseif ($request->qte1 != 0) {
-            $medoc = new Offrir();
-            $medoc->VIS_MATRICULE = $matricule;
-            $medoc->RAP_NUM = $id;
-            $medoc->MED_DEPOTLEGAL = $request->medoc1;
-            $medoc->OFF_QTE = $request->qte1;
-            $medoc->save();
-        } elseif ($request->qte2 != 0) {
-            $medoc = new Offrir();
-            $medoc->VIS_MATRICULE = $matricule;
-            $medoc->RAP_NUM = $id;
-            $medoc->MED_DEPOTLEGAL = $request->medoc2;
-            $medoc->OFF_QTE = $request->qte2;
-            $medoc->save();
+        if (($request->qte1 != NULL && $request->medoc1 != NULL) || ($request->qte2 != NULL && $request->medoc2 != NULL)) {
+            Offrir::Where('RAP_NUM', $id)->delete();
+            // UPDATE OFFIR
+            if ($request->qte1 != NULL) {
+                $offrir = new Offrir();
+                $offrir->RAP_NUM = $id;
+                $offrir->MED_DEPOTLEGAL = $request->medoc1;
+                $offrir->OFF_QTE = $request->qte1;
+                $offrir->save();
+            } elseif ($request->qte2 != NULL) {
+                $offrir = new Offrir();
+                $offrir->RAP_NUM = $id;
+                $offrir->MED_DEPOTLEGAL = $request->medoc2;
+                $offrir->OFF_QTE = $request->qte2;
+                $offrir->save();
+            }
+        } elseif (($request->qte1 != NULL && $request->medoc1 != NULL) && ($request->qte2 != NULL && $request->medoc2 != NULL)) {
+            Offrir::Where('RAP_NUM', $id)->delete();
+            // UPDATE OFFIR
+            $offrir = new Offrir();
+            $offrir->RAP_NUM = $id;
+            $offrir->MED_DEPOTLEGAL = $request->medoc1;
+            $offrir->OFF_QTE = $request->qte1;
+            $offrir->save();
+            $offrir = new Offrir();
+            $offrir->RAP_NUM = $id;
+            $offrir->MED_DEPOTLEGAL = $request->medoc2;
+            $offrir->OFF_QTE = $request->qte2;
+            $offrir->save();
+        } else {
+            Offrir::Where('RAP_NUM', $id)->delete();
         }
+
+        // Update du rapport avec les nouvelles entrées
         Rapport::Where('RAP_NUM', $id)->update(
             ['RAP_NUM' => $id,
             'VIS_MATRICULE' => Auth::user()->VIS_MATRICULE,
@@ -269,14 +272,12 @@ class RapportController extends Controller
             'RAP_MOTIF' => $request->motif,]
         );
 
-        // Offrir::Where('RAP_NUM', $id)->delete();
-        // Rapport::Where('RAP_NUM', $id)->delete();
-
         session()->flash('update', 'Le rapport numéro '.$id.' à été modifié avec succès');
-        
+
         return redirect('/rapport');
     }
     /* Update Rapport */
+
 
     /* Delete Rapport */
 
@@ -305,9 +306,9 @@ class RapportController extends Controller
     {
         Offrir::Where('RAP_NUM', $id)->delete();
         Rapport::Where('RAP_NUM', $id)->delete();
-        
+
         session()->flash('delete', 'Le rapport numéro '.$id.' à été supprimé avec succès');
 
         return redirect('/rapport');
-    } 
+    }
 }

@@ -77,11 +77,11 @@
                                                         @endif
                                                     @endforeach
                                                 </select>
-                                                @if ($rapportsMedicoCount > 0)                                        
+                                                @if ($rapportsMedicoCount > 0)
                                                     @if ($rapportsMedico[0]->OFF_QTE != null)
                                                         <input type="range" min="0" max="5" value="{{$rapportsMedico[0]->OFF_QTE}}" class="range" step="1" name="qte1">
                                                     @else
-                                                        <input type="range" min="0" max="5" value="0" class="range" step="1" name="qte1">                                                    
+                                                        <input type="range" min="0" max="5" value="0" class="range" step="1" name="qte1">
                                                     @endif
                                                 @else
                                                     <input type="range" min="0" max="5" value="0" class="range" step="1" name="qte1">
@@ -115,10 +115,10 @@
                                                     @if ($rapportsMedico[1]->OFF_QTE != null)
                                                         <input type="range" min="0" max="5" value="{{$rapportsMedico[1]->OFF_QTE}}" class="range" step="1" name="qte2">
                                                     @else
-                                                        <input type="range" min="0" max="5" value="0" class="range" step="1" name="qte2">                                                    
+                                                        <input type="range" min="0" max="5" value="0" class="range" step="1" name="qte2">
                                                     @endif
                                                 @else
-                                                    <input type="range" min="0" max="5" value="0" class="range" step="1" name="qte1">
+                                                    <input type="range" min="0" max="5" value="0" class="range" step="1" name="qte2">
                                                 @endif
                                                 <div class="w-full flex justify-between text-xs px-2">
                                                     <span>0</span>
