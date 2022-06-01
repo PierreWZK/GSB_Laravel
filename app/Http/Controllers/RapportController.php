@@ -229,35 +229,39 @@ class RapportController extends Controller
         ]);
 
         // UPDATE RAPPORT
-        if (($request->qte1 != NULL && $request->medoc1 != NULL) || ($request->qte2 != NULL && $request->medoc2 != NULL)) {
+        if (($request->qte1 != 0 && $request->medoc1 != NULL) && ($request->qte2 != 0 && $request->medoc2 != NULL)) {
+            Offrir::Where('RAP_NUM', $id)->delete();
+            // UPDATE OFFIR
+            $offrir = new Offrir();
+            $offrir->VIS_MATRICULE = Auth::user()->VIS_MATRICULE;
+            $offrir->RAP_NUM = $id;
+            $offrir->MED_DEPOTLEGAL = $request->medoc1;
+            $offrir->OFF_QTE = $request->qte1;
+            $offrir->save();
+            $offrir = new Offrir();
+            $offrir->VIS_MATRICULE = Auth::user()->VIS_MATRICULE;
+            $offrir->RAP_NUM = $id;
+            $offrir->MED_DEPOTLEGAL = $request->medoc2;
+            $offrir->OFF_QTE = $request->qte2;
+            $offrir->save();
+        } elseif (($request->qte1 != 0 && $request->medoc1 != NULL) || ($request->qte2 != 0 && $request->medoc2 != NULL)) {
             Offrir::Where('RAP_NUM', $id)->delete();
             // UPDATE OFFIR
             if ($request->qte1 != NULL) {
                 $offrir = new Offrir();
+                $offrir->VIS_MATRICULE = Auth::user()->VIS_MATRICULE;
                 $offrir->RAP_NUM = $id;
                 $offrir->MED_DEPOTLEGAL = $request->medoc1;
                 $offrir->OFF_QTE = $request->qte1;
                 $offrir->save();
             } elseif ($request->qte2 != NULL) {
                 $offrir = new Offrir();
+                $offrir->VIS_MATRICULE = Auth::user()->VIS_MATRICULE;
                 $offrir->RAP_NUM = $id;
                 $offrir->MED_DEPOTLEGAL = $request->medoc2;
                 $offrir->OFF_QTE = $request->qte2;
                 $offrir->save();
             }
-        } elseif (($request->qte1 != NULL && $request->medoc1 != NULL) && ($request->qte2 != NULL && $request->medoc2 != NULL)) {
-            Offrir::Where('RAP_NUM', $id)->delete();
-            // UPDATE OFFIR
-            $offrir = new Offrir();
-            $offrir->RAP_NUM = $id;
-            $offrir->MED_DEPOTLEGAL = $request->medoc1;
-            $offrir->OFF_QTE = $request->qte1;
-            $offrir->save();
-            $offrir = new Offrir();
-            $offrir->RAP_NUM = $id;
-            $offrir->MED_DEPOTLEGAL = $request->medoc2;
-            $offrir->OFF_QTE = $request->qte2;
-            $offrir->save();
         } else {
             Offrir::Where('RAP_NUM', $id)->delete();
         }
